@@ -1,4 +1,9 @@
-GNU GENERAL PUBLIC LICENSE
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 1
+
+
+                    GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
@@ -54,6 +59,16 @@ protecting users' freedom to change the software.  The systematic
 pattern of such abuse occurs in the area of products for individuals to
 use, which is precisely where it is most unacceptable.  Therefore, we
 have designed this version of the GPL to prohibit the practice for those
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 2
+
+
 products.  If such problems arise substantially in other domains, we
 stand ready to extend this provision to those domains in future versions
 of the GPL, as needed to protect the freedom of users.
@@ -111,6 +126,16 @@ menu, a prominent item in the list meets this criterion.
 
   1. Source Code.
 
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 3
+
+
+
   The "source code" for a work means the preferred form of the work
 for making modifications to it.  "Object code" means any non-source
 form of a work.
@@ -166,6 +191,16 @@ convey, without conditions so long as your license otherwise remains
 in force.  You may convey covered works to others for the sole purpose
 of having them make modifications exclusively for you, or provide you
 with facilities for running those works, provided that you comply with
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 4
+
+
 the terms of this License in conveying all material for which you do
 not control copyright.  Those thus making or running the covered works
 for you must do so exclusively on your behalf, under your direction
@@ -222,6 +257,16 @@ terms of section 4, provided that you also meet all of these conditions:
     c) You must license the entire work, as a whole, under this
     License to anyone who comes into possession of a copy.  This
     License will therefore apply, along with any applicable section 7
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 5
+
+
     additional terms, to the whole of the work, and all its parts,
     regardless of how they are packaged.  This License gives no
     permission to license the work in any other way, but it does not
@@ -278,6 +323,16 @@ in one of these ways:
     further charge.  You need not require recipients to copy the
     Corresponding Source along with the object code.  If the place to
     copy the object code is a network server, the Corresponding Source
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 6
+
+
     may be on a different server (operated by you or a third party)
     that supports equivalent copying facilities, provided you maintain
     clear directions next to the object code saying where to find the
@@ -333,6 +388,16 @@ the User Product in which it has been modified or installed.  Access to a
 network may be denied when the modification itself materially and
 adversely affects the operation of the network or violates the rules and
 protocols for communication across the network.
+
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 7
+
 
   Corresponding Source conveyed, and Installation Information provided,
 in accord with this section must be in a format that is publicly
@@ -390,6 +455,16 @@ restrictions" within the meaning of section 10.  If the Program as you
 received it, or any part of it, contains a notice stating that it is
 governed by this License along with a term that is a further
 restriction, you may remove that term.  If a license document contains
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 8
+
+
 a further restriction but permits relicensing or conveying under this
 License, you may add to a covered work material governed by the terms
 of that license document, provided that the further restriction does
@@ -446,6 +521,16 @@ covered work, you indicate your acceptance of this License to do so.
   10. Automatic Licensing of Downstream Recipients.
 
   Each time you convey a covered work, the recipient automatically
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                    Page 9
+
+
 receives a license from the original licensors, to run, modify and
 propagate that work, subject to this License.  You are not responsible
 for enforcing compliance by third parties with this License.
@@ -502,6 +587,16 @@ to copy, free of charge and under the terms of this License, through a
 publicly available network server or other readily accessible means,
 then you must either (1) cause the Corresponding Source to be so
 available, or (2) arrange to deprive yourself of the benefit of the
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                   Page 10
+
+
 patent license for this particular work, or (3) arrange, in a manner
 consistent with the requirements of this License, to extend the patent
 license to downstream recipients.  "Knowingly relying" means you have
@@ -558,6 +653,16 @@ combined work, and to convey the resulting work.  The terms of this
 License will continue to apply to the part which is the covered work,
 but the special requirements of the GNU Affero General Public License,
 section 13, concerning interaction through a network will apply to the
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                   Page 11
+
+
 combination as such.
 
   14. Revised Versions of this License.
@@ -614,6 +719,16 @@ SUCH DAMAGES.
   If the disclaimer of warranty and limitation of liability provided
 above cannot be given local legal effect according to their terms,
 reviewing courts shall apply local law that most closely approximates
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                   Page 12
+
+
 an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
@@ -631,8 +746,8 @@ to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
-    {one line to give the program's name and a brief idea of what it does.}
-    Copyright (C) {year}  {name of author}
+    <one line to give the program's name and a brief idea of what it does.>
+    Copyright (C) <year>  <name of author>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -652,7 +767,7 @@ Also add information on how to contact you by electronic and paper mail.
   If the program does terminal interaction, make it output a short
 notice like this when it starts in an interactive mode:
 
-    {project}  Copyright (C) {year}  {fullname}
+    <program>  Copyright (C) <year>  <name of author>
     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
@@ -670,5 +785,74 @@ For more information on this, and how to apply and follow the GNU GPL, see
 into proprietary programs.  If your program is a subroutine library, you
 may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
+
+
+
+
+
+
+
+2010-03-29 19:52                   gpl-3.0.txt                   Page 13
+
+
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
