@@ -31,8 +31,9 @@ create the address directory, and write the config file. No worries.
 
 Make sure you have Tcl installed.
 Get it from http://www.activestate.com/activetcl
-Copy the sample config file to C:\\Users\Your Name\.addresstcl.conf
-Create the folder C:\\Users\Your Name\Documents\.addresstcl\
+Copy the sample config file to C:\Users\YourName\.addresstcl.conf
+and edit it accordingly (as instructed in the file).
+Create the folder C:\Users\YourName\Documents\Addresses\
 Now you can simply click on the address.tcl, and it should run.
 You may make a desktop shortcut to it, etc.
 

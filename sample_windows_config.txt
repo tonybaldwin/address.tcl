@@ -1,0 +1,20 @@
+# addresstcl.conf
+# This is a sample configuration file for WINDOWS Users.
+# (the install.sh will install for Linux and Mac folks, and write a config).
+
+# You could simply copy or move this file to C:\Users\YourName\.addresstcl.conf
+# (where, of course, "YourName" is replaced with your username on the machine in question)
+# edit it accordingly, and it will work 
+
+# edit the following line so that YOURNAME is replaced with your
+# username on your computer:
+set addir "C:\\Users\\YOURNAME\\Documents\\Addresses"
+
+# Now to choose a browser. You must choose ONLY ONE.
+# to use Google Chrome, simply delete the "#" at the beginning of the next line:
+# set browser {C:/Program Files/Google/Chrome/Application/chrome.exe}
+# to use Mozille Firefox, delete the "#" at the beginning of the next line:
+# set browser {C:/Program Files (x86)/Mozilla Firefox/firefox.exe}
+# to use Microsoft's Internet Explorer, delete the "#" at the beginning of the next line:
+# set browser {C:/Program Files (x86)/Internet Explorer/iexplorer.exe}
+
