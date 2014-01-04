@@ -10,14 +10,12 @@ package require fileutil
 package require Tk
 package require Ttk
 
-global addir
-# edit this next line to reflect the directory where you wish to store address files.
-# in gnu/linux, I might suggest "~/.addresses"
-# in Windows, I might suggest "~\\Documents\\addresses"
-# In any case, make sure you've created the relevant directory/folder.
-set addir "~/.addresses"
+uplevel #0 [list source ~/.addresstcl.conf]
+
+cd $addir 
 
 global filename
+global addir
 global lname
 global fname
 global cell
@@ -38,6 +36,8 @@ global novar
 global sterm
 global filetypes
 global allvars
+global browser
+global addir
 
 set allvars [list filename lname fname cell homephone ophone email email2 website street city state zcode country tags note novar]
 
@@ -63,11 +63,12 @@ bind . <Escape> {exit}
 bind . <Control-s> {saveadd}
 bind . <Control-x> {saveads}
 bind . <Control-o> {openfile}
-bind . <Control-c> {clear}
+bind . <Control-w> {clear}
 bind . <Control-q> {exit}
 bind . <F1> {help}
 bind . <F2> {seek}
 bind . <F3> {listadds}
+bind . <F7> {vieweb}
 
 
 cd $addir
@@ -90,8 +91,9 @@ menu .menu.file.menu -tearoff 0
 .menu.file.menu add command -label "Open" -command {openfile} -accelerator Ctrl+o
 .menu.file.menu add command -label  "Save" -command {saveadd} -accelerator Ctrl+s
 .menu.file.menu  add command -label "SaveAs" -command {saveads} -accelerator Ctrl-x
-.menu.file.menu add command -label "Close" -command {clear} -accelerator Ctrl+c
+.menu.file.menu add command -label "Close" -command {clear} -accelerator Ctrl+w
 .menu.file.menu add separator
+.menu.file.menu add command -label "Website" -command {vieweb} -accelerator F7
 .menu.file.menu add command -label "List" -command {listadds} -accelerator F3
 .menu.file.menu add command -label "Search" -command {seek} -accelerator F2
 .menu.file.menu add command -label "Help" -command {help} -accelerator F1
@@ -125,9 +127,9 @@ grid [ttk::label .address.eml -text "E-mail: "]\
 grid [ttk::label .address.eml2 -text "E-mail 2: "]\
 [ttk::entry .address.email2 -width 50 -textvar email2]	
 
-grid [ttk::label .address.ws -text "Website"]\
+grid [ttk::label .address.ws -text "Website: "]\
 [ttk::entry .address.web -width 50 -textvar website]
-	
+
 grid [ttk::label .address.street -text "Street: "]\
 [ttk::entry .address.st -width 50 -textvar street]
 	
@@ -145,12 +147,19 @@ grid [ttk::label .address.country -text "Country: "]\
 	
 grid [ttk::label .address.tags -text "Tags: "]\
 [ttk::entry .address.tgz -width 50 -textvar tags]
-	     
-grid [ttk::label .address.note -text "Note: "]\
-[ttk::entry .address.not -width 50 -textvar note]
-	     
+
 pack .address -in .
 
+frame .note
+tk::label .note.label -text "Notes: "
+text .note.text -width 59 -height 10 -wrap word -yscrollcommand ".note.scroll set"
+scrollbar .note.scroll -command ".note.text yview"
+set note [.note.text get 1.0 {end -1c}]
+pack .note -in . 
+pack .note.label -in .note -side left
+pack .note.text -in .note -side left -fill both
+pack .note.scroll -in .note -side left -fill y
+	
 proc listadds {} {
 	toplevel .list
 	wm title .list "Address List"
@@ -178,10 +187,12 @@ proc clear {} {
 		foreach var $::allvars {set $var " "}
 		wm title . "Address Book"
 		set ::filename " "
+		.note.text delete 1.0 end 
 	}
 	
 proc saveadd {} {
 	set novar "EOF"
+	set ::note [.note.text get 1.0 {end -1c}]
 	set filename "$::lname.$::fname.address"
 	set fileid [open $filename w]
 	foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
@@ -192,6 +203,7 @@ proc saveadd {} {
 proc saveads {} { 
 	set filename [tk_getSaveFile -filetypes $::file_types -initialdir $::addir]
 	set novar "EOF"
+	set ::note [.note.text get 1.0 {end -1c}]
 	set fileid [open $filename w]
 	foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
 	wm title . "Now Tickling: $filename"
@@ -204,6 +216,7 @@ proc openfile {} {
 	     }
 	     set addressfile [tk_getOpenFile -filetypes $file_types -initialdir $::addir]
 	     uplevel #0 [list source $addressfile]
+	     .note.text insert end "$::note"
 	     wm title . "Now Tickling: $addressfile"
 }
 
@@ -241,14 +254,27 @@ proc seek {} {
 	pack .seek.s -in .seek
 }
 
+proc vieweb {} {
+	eval exec "\"$::browser\" $::website"
+}
+
+proc wiki {} {
+	eval exec "\"$::browser\" http://wiki.tonybaldwin.info/doku.php?id=hax:addresstcl"
+}
 
 proc help {} {
 	toplevel .help
 	wm title .help "Tcl Address Help"
 	bind .help <Escape> {destroy .help}
-	grid [text .help.t -width 58 -height 5] 
-	.help.t insert end "This is a simple address book program in tcl/tk.\nRead the README file, and if you still require assistance,\ncontact tony\nhttp://wiki.tonybaldwin.me"
-	grid [ttk::button .help.ok -text "Close Help" -command {destroy .help}]
+	frame .help.t
+	grid [text .help.t.text -width 58 -height 5] 
+	bind .help.t.text <KeyPress> break
+	.help.t.text insert end "This is a simple address book program in tcl/tk.\nRead the README file, and if you still require assistance,\ncontact tony\nhttp://wiki.tonybaldwin.me"
+	frame .help.b
+	grid [ttk::button .help.b.web -text "Wiki" -command {wiki}]\
+	[ttk::button .help.b.ok -text "Close Help" -command {destroy .help}]
+	pack .help.t -in .help
+	pack .help.b -in .help
 }
 
 # This program was written by tony baldwin - http://wiki.tonybaldwin.info 
