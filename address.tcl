@@ -37,9 +37,10 @@ global sterm
 global filetypes
 global allvars
 global browser
+global bday
 global addir
 
-set allvars [list filename lname fname cell homephone ophone email email2 website street city state zcode country tags note novar]
+set allvars [list filename lname fname cell homephone ophone email email2 website street city state zcode country bday tags note novar]
 
 set filename ""
 set lname ""
@@ -144,6 +145,9 @@ grid [ttk::label .address.zip -text "Zip Code: "]\
 	
 grid [ttk::label .address.country -text "Country: "]\
 [ttk::entry .address.cntry -width 50 -textvar country]
+
+grid [ttk::label .address.dob -text "Birthday: "]\
+[ttk::entry .address.bday -width 50 -textvar bday]
 	
 grid [ttk::label .address.tags -text "Tags: "]\
 [ttk::entry .address.tgz -width 50 -textvar tags]
