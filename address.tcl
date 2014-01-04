@@ -5,13 +5,70 @@
 # released according to the terms of the
 # GNU Public License, v.3 or later
 
-package require fileutil
 
-bind . <Escape> {exit}
+package require fileutil
+package require Tk
+package require Ttk
 
 global addir
-# edit the following to indicate where you keep your address files
-set addir "~\\Documents\\Addresses" 
+# edit this next line to reflect the directory where you wish to store address files.
+# in gnu/linux, I might suggest "~/.addresses"
+# in Windows, I might suggest "~\\Documents\\addresses"
+# In any case, make sure you've created the relevant directory/folder.
+set addir "~/.addresses"
+
+global filename
+global lname
+global fname
+global cell
+global homephone
+global ophone
+global email
+global email2
+global website
+global street
+global street
+global city
+global state
+global zcode
+global country
+global tags
+global note
+global novar
+global sterm
+global filetypes
+global allvars
+
+set allvars [list filename lname fname cell homephone ophone email email2 website street city state zcode country tags note novar]
+
+set filename ""
+set lname ""
+set fname ""
+set cell ""
+set homephone ""
+set ophone ""
+set email ""
+set email2 ""
+set website ""
+set street ""
+set city ""
+set state ""
+set country ""
+set tags ""
+set note ""
+set novar "EOF"
+set sterm ""
+
+bind . <Escape> {exit}
+bind . <Control-s> {saveadd}
+bind . <Control-x> {saveads}
+bind . <Control-o> {openfile}
+bind . <Control-c> {clear}
+bind . <Control-q> {exit}
+bind . <F1> {help}
+bind . <F2> {seek}
+bind . <F3> {listadds}
+
 
 cd $addir
 
@@ -20,29 +77,86 @@ set file_types {
 {"Address" {.address}}
 }
 
-wm title . "Address Book"
+wm title . "Tcl Address Book"
 
-frame .name 
+frame .menu -relief raised
 
-grid [ttk::label .name.name -text "Tcl Address Book"]
+ttk::menubutton .menu.file -text "File Menu" -menu .menu.file.menu 
+ttk::button .menu.list -text "List" -command {listadds}
+ttk::button .menu.seek -text "Search" -command {seek}
+ttk::button .menu.help -text "Help" -command {help}
 
-pack .name -in . -fill x
+menu .menu.file.menu -tearoff 0
+.menu.file.menu add command -label "Open" -command {openfile} -accelerator Ctrl+o
+.menu.file.menu add command -label  "Save" -command {saveadd} -accelerator Ctrl+s
+.menu.file.menu  add command -label "SaveAs" -command {saveads} -accelerator Ctrl-x
+.menu.file.menu add command -label "Close" -command {clear} -accelerator Ctrl+c
+.menu.file.menu add separator
+.menu.file.menu add command -label "List" -command {listadds} -accelerator F3
+.menu.file.menu add command -label "Search" -command {seek} -accelerator F2
+.menu.file.menu add command -label "Help" -command {help} -accelerator F1
+.menu.file.menu add command -label "Quit" -command {exit} -accelerator Esc
 
-frame .fields
+pack .menu.file -in .menu -side left
+pack .menu.help -in .menu -side right
+# pack .menu.seek -in .menu -side right
+# pack .menu.list -in .menu -side right
+pack .menu -in . -fill x
 
-grid [ttk::button .fields.open -text "Open Address" -command {openadd}]\
-[ttk::button .fields.new -text "New Address" -command {newadd}]\
-[ttk::button .fields.list -text "List Addresses" -command {listadds}]\
-[ttk::button .fields.search -text "Search" -command {seek}]\
-[ttk::button .fields.out -text "QUIT" -command {exit}]\
-[ttk::button .fields.help -text "Help" -command {help}]
+frame .address
+grid [ttk::label .address.fname -text "First Name: "]\
+[ttk::entry .address.fn -width 50 -textvar fname]
+	
+grid [ttk::label .address.lname -text "Last Name: "]\
+[ttk::entry .address.ln -width 50 -textvar lname]
+	
+grid [ttk::label .address.mobile -text "Cell Phone: "]\
+[ttk::entry .address.mobi -width 50 -textvar cell]
 
-pack .fields -in . -fill x
+grid [ttk::label .address.hph -text "Home Phone: "]\
+[ttk::entry .address.homeph -width 50 -textvar homephone]
+	     
+grid [ttk::label .address.0ph -text "Other Phone: "]\
+[ttk::entry .address.oph -width 50 -textvar ophone]
+
+grid [ttk::label .address.eml -text "E-mail: "]\
+[ttk::entry .address.email -width 50 -textvar email]
+	     
+grid [ttk::label .address.eml2 -text "E-mail 2: "]\
+[ttk::entry .address.email2 -width 50 -textvar email2]	
+
+grid [ttk::label .address.ws -text "Website"]\
+[ttk::entry .address.web -width 50 -textvar website]
+	
+grid [ttk::label .address.street -text "Street: "]\
+[ttk::entry .address.st -width 50 -textvar street]
+	
+grid [ttk::label .address.city -text "City: "]\
+[ttk::entry .address.cty -width 50 -textvar city]
+	
+grid [ttk::label .address.state -text "State: "]\
+[ttk::entry .address.st8 -width 50 -textvar state]
+	
+grid [ttk::label .address.zip -text "Zip Code: "]\
+[ttk::entry .address.zcode -width 50 -textvar zcode]
+	
+grid [ttk::label .address.country -text "Country: "]\
+[ttk::entry .address.cntry -width 50 -textvar country]
+	
+grid [ttk::label .address.tags -text "Tags: "]\
+[ttk::entry .address.tgz -width 50 -textvar tags]
+	     
+grid [ttk::label .address.note -text "Note: "]\
+[ttk::entry .address.not -width 50 -textvar note]
+	     
+pack .address -in .
 
 proc listadds {} {
-	frame .list
+	toplevel .list
+	wm title .list "Address List"
+	bind .list <Escape> {destroy .list}
 	frame .list.t
-	text .list.t.l -width 56 -height 10 -wrap word -yscrollcommand ".list.t.ys set"
+	text .list.t.l -width 30 -height 10 -wrap word -yscrollcommand ".list.t.ys set"
 	scrollbar .list.t.ys -command ".list.t.l yview" 
    
 	pack .list.t.l -in .list.t -side left -fill both
@@ -57,176 +171,84 @@ proc listadds {} {
 
 	pack .list.t -in .list
 	pack .list.b -in .list
-	pack .list -in .
 }
 
-proc newadd {} {
-		frame .new 
-		set allvars [list lname fname cell homephone ophone email email2 street city state zcode country tags note novar]
-		foreach var $allvars {global $var}
-		foreach var $allvars {set $var " "}
-		
-	grid [ttk::label .new.fname -text "First Name: "]\
-	[ttk::entry .new.fn -width 50 -textvar fname]
-	
-	grid [ttk::label .new.lname -text "Last Name: "]\
-	[ttk::entry .new.ln -width 50 -textvar lname]
-	
-	grid [ttk::label .new.mobile -text "Cell Phone: "]\
-	[ttk::entry .new.mobi -width 50 -textvar cell]
-
-	grid [ttk::label .new.hph -text "Home Phone: "]\
-	[ttk::entry .new.homeph -width 50 -textvar homephone]
-	
-	grid [ttk::label .new.0ph -text "Other Phone: "]\
-	[ttk::entry .new.oph -width 50 -textvar ophone]
-
-	grid [ttk::label .new.eml -text "E-mail 1: "]\
-	[ttk::entry .new.email -width 50 -textvar email]
-
-	grid [ttk::label .new.eml2 -text "E-mail 2: "]\
-	[ttk::entry .new.email2 -width 50 -textvar email2]	
-	
-	grid [ttk::label .new.street -text "Street: "]\
-	[ttk::entry .new.st -width 50 -textvar street]
-	
-	grid [ttk::label .new.city -text "City: "]\
-	[ttk::entry .new.cty -width 50 -textvar city]
-	
-	grid [ttk::label .new.state -text "State: "]\
-	[ttk::entry .new.st8 -width 50 -textvar state]
-	
-	grid [ttk::label .new.zip -text "Zip Code: "]\
-	[ttk::entry .new.zcode -width 50 -textvar zcode]
-	
-	grid [ttk::label .new.country -text "Country: "]\
-	[ttk::entry .new.cntry -width 50 -textvar country]
-	
-	grid [ttk::label .new.tags -text "Tags: "]\
-	[ttk::entry .new.tgz -width 50 -textvar tags]
-	
-	grid [ttk::label .new.note -text "Note: "]\
-	[ttk::entry .new.not -width 50 -textvar note]
-	
-	grid [ttk::button .new.save -text "Save Address" -command {
-		set novar EOF
-		set allvars [list lname fname cell homephone ophone email street city state zcode country tags note novar]
-		set filename "$lname.$fname.address"
-		set fileid [open $filename w]
-		foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
-		close $fileid}]\
-	[ttk::button .new.close -text "Close Address" -command {destroy .new}]
-	
-	pack .new -in .
+proc clear {} {
+		foreach var $::allvars {global $var}
+		foreach var $::allvars {set $var " "}
+		wm title . "Address Book"
+		set ::filename " "
 	}
 	
-proc savenew {} {
-	set allvars [list lname fname street city state zcode novar]
-	set filename "$lname.$fname.address"
+proc saveadd {} {
+	set novar "EOF"
+	set filename "$::lname.$::fname.address"
 	set fileid [open $filename w]
 	foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
+	wm title . "Now Tickling: $::filename"
 	close $fileid
 }
 
-proc openadd {} {
+proc saveads {} { 
+	set filename [tk_getSaveFile -filetypes $::file_types -initialdir $::addir]
+	set novar "EOF"
+	set fileid [open $filename w]
+	foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
+	wm title . "Now Tickling: $filename"
+	close $fileid
+}
+
+proc openfile {} {
 	     set file_types {
 	     {"address file" {.address}}
 	     }
 	     set addressfile [tk_getOpenFile -filetypes $file_types -initialdir $::addir]
 	     uplevel #0 [list source $addressfile]
 	     wm title . "Now Tickling: $addressfile"
-	     frame .address
-	     grid [ttk::label .address.fname -text "First Name: "]\
-	     [ttk::entry .address.fn -width 50 -textvar fname]
-	
-	     grid [ttk::label .address.lname -text "Last Name: "]\
-	     [ttk::entry .address.ln -width 50 -textvar lname]
-	
-	     grid [ttk::label .address.mobile -text "Cell Phone: "]\
-	     [ttk::entry .address.mobi -width 50 -textvar cell]
-
-	     grid [ttk::label .address.hph -text "Home Phone: "]\
-	     [ttk::entry .address.homeph -width 50 -textvar homephone]
-	     
-	     grid [ttk::label .address.0ph -text "Other Phone: "]\
-	     [ttk::entry .address.oph -width 50 -textvar ophone]
-
-	     grid [ttk::label .address.eml -text "E-mail: "]\
-	     [ttk::entry .address.email -width 50 -textvar email]
-	     
-	     grid [ttk::label .address.eml2 -text "E-mail 2: "]\
-	     [ttk::entry .address.email2 -width 50 -textvar email2]	
-	
-	     grid [ttk::label .address.street -text "Street: "]\
-	     [ttk::entry .address.st -width 50 -textvar street]
-	
-	     grid [ttk::label .address.city -text "City: "]\
-	     [ttk::entry .address.cty -width 50 -textvar city]
-	
-	     grid [ttk::label .address.state -text "State: "]\
-	     [ttk::entry .address.st8 -width 50 -textvar state]
-	
-	     grid [ttk::label .address.zip -text "Zip Code: "]\
-	     [ttk::entry .address.zcode -width 50 -textvar zcode]
-	
-	     grid [ttk::label .address.country -text "Country: "]\
-	     [ttk::entry .address.cntry -width 50 -textvar country]
-	
-	     grid [ttk::label .address.tags -text "Tags: "]\
-	     [ttk::entry .address.tgz -width 50 -textvar tags]
-	     
-	     grid [ttk::label .address.note -text "Note: "]\
-	     [ttk::entry .address.not -width 50 -textvar note]
-	     
-	     grid [ttk::button .address.save -text "Save Address" -command {
-		set novar EOF
-		set allvars [list lname fname cell homephone ophone email email2 street city state zcode country tags note novar]
-		set filename "$lname.$fname.address"
-		set fileid [open $filename w]
-		foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
-		close $fileid}]\
-            [ttk::button .address.close -text "Close Address" -command {destroy .address}]
-	    pack .address -in .
 }
 
 
 proc seek {} {
-	frame .seek
-	grid [ttk::label .seek.term -text "Enter search term: "]\
-	[ttk::entry .seek.this -textvar sterm]\
-	[ttk::button .seek.go -text "Go" -command {
-		destroy .matches
-		frame .matches
-		frame .matches.t
-		text .matches.t.list -width 56 -height 5  -wrap word  -yscrollcommand ".matches.t.s set"
-		scrollbar .matches.t.s -command ".matches.t.list yview"
+	global sterm
+	toplevel .seek
+	wm title .seek "Search"
+	bind .seek <Escape> {destroy .seek}
+	frame .seek.s
+	grid [ttk::label .seek.s.term -text "Enter search term: "]\
+	[ttk::entry .seek.s.this -textvar sterm]\
+	[ttk::button .seek.s.go -text "Go" -command {
+		destroy .seek.results
+		frame .seek.results
+		frame .seek.results.t
+		text .seek.results.t.list -width 56 -height 5  -wrap word  -yscrollcommand ".seek.results.t.s set"
+		scrollbar .seek.results.t.s -command ".seek.results.t.list yview"
 		set list [glob -tails -type f -directory $::addir *.address]
 		set myList [::fileutil::grep (?i)$sterm $list]
 		regsub -all {\{} $myList "" alist
 		regsub -all {\}} $alist "\n" blist
 		regsub -all {set} $blist "" clist
-		.matches.t.list insert end "$clist"
-		frame .matches.btn
-		ttk::button .matches.btn.done -text "Close Results" -command {destroy .matches}
-		pack .matches -in .
-		pack .matches.t -in .matches
-		pack .matches.t.list -in .matches.t  -side left -fill both
-		pack .matches.t.s -in .matches.t   -side left -fill y
-		pack .matches.btn -in .matches
-		pack .matches.btn.done -in .matches.btn
+		.seek.results.t.list insert end "$clist"
+		frame .seek.results.btn
+		ttk::button .seek.results.btn.done -text "Close Results" -command {destroy .seek.results}
+		pack .seek.results -in .seek
+		pack .seek.results.t -in .seek.results 
+		pack .seek.results.t.list -in .seek.results.t -side left -fill both
+		pack .seek.results.t.s -in .seek.results.t   -side left -fill y
+		pack .seek.results.btn -in .seek.results
+		pack .seek.results.btn.done -in .seek.results.btn
 		}]\
 	[ttk::button .seek.done -text "Close Search" -command {destroy .seek}]
+	pack .seek.s -in .seek
+}
 
-	pack .seek -in .
-	}
 
 proc help {} {
-	frame .help
-	grid [text .help.t -width 58 -height 3] 
-	.help.t insert end "This is a simple address program in tcl/tk.\nif you require assistance, contact tony\nhttp://wiki.tonybaldwin.me"
+	toplevel .help
+	wm title .help "Tcl Address Help"
+	bind .help <Escape> {destroy .help}
+	grid [text .help.t -width 58 -height 5] 
+	.help.t insert end "This is a simple address book program in tcl/tk.\nRead the README file, and if you still require assistance,\ncontact tony\nhttp://wiki.tonybaldwin.me"
 	grid [ttk::button .help.ok -text "Close Help" -command {destroy .help}]
-	
-	pack .help -in .
 }
 
 # This program was written by tony baldwin - http://wiki.tonybaldwin.info 
