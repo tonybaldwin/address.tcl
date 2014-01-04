@@ -18,6 +18,7 @@ global filename
 global addir
 global lname
 global fname
+global company
 global cell
 global homephone
 global ophone
@@ -40,11 +41,12 @@ global browser
 global bday
 global addir
 
-set allvars [list filename lname fname cell homephone ophone email email2 website street city state zcode country bday tags note novar]
+set allvars [list filename lname fname company cell homephone ophone email email2 website street city state zcode country bday tags note novar]
 
 set filename ""
 set lname ""
 set fname ""
+set company ""
 set cell ""
 set homephone ""
 set ophone ""
@@ -114,6 +116,9 @@ grid [ttk::label .address.fname -text "First Name: "]\
 grid [ttk::label .address.lname -text "Last Name: "]\
 [ttk::entry .address.ln -width 50 -textvar lname]
 	
+grid [ttk::label .address.co -text "Company: "]\
+[ttk::entry .address.cmpny -width 50 -textvar company]
+
 grid [ttk::label .address.mobile -text "Cell Phone: "]\
 [ttk::entry .address.mobi -width 50 -textvar cell]
 
