@@ -57,6 +57,7 @@ set state ""
 set country ""
 set tags ""
 set note ""
+set bday ""
 set novar "EOF"
 set sterm ""
 
