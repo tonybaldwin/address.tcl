@@ -156,7 +156,7 @@ proc listadds {} {
 	wm title .list "Address List"
 	bind .list <Escape> {destroy .list}
 	frame .list.t
-	text .list.t.l -width 30 -height 10 -wrap word -yscrollcommand ".list.t.ys set"
+	text .list.t.l -width 30 -height 20 -wrap word -yscrollcommand ".list.t.ys set"
 	scrollbar .list.t.ys -command ".list.t.l yview" 
    
 	pack .list.t.l -in .list.t -side left -fill both
