@@ -23,7 +23,7 @@ Install and Use
 * GNU/Linux
 
 Make sure you have Tcl8.5 or newer installed 
-(user you distro's package manager, whether aptitude, yum, pacman, whatever).
+(use your distro's package manager, whether aptitude, yum, pacman, whatever).
 Run the install.sh script from your terminal.
 It will install address.tcl in ~/bin/address.tcl, give it execute permissions, 
 create the address directory, and write the config file. No worries.
