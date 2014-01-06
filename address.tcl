@@ -265,11 +265,15 @@ proc seek {} {
 }
 
 proc vieweb {} {
+	if { $::website != " " } {
 	eval exec "\"$::browser\" $::website"
+	} else {
+	eval exec "\"$::browser\" http://wiki.tonybaldwin.info/doku.php?id=hax:addresstcl &"
+	}
 }
 
 proc wiki {} {
-	eval exec "\"$::browser\" http://wiki.tonybaldwin.info/doku.php?id=hax:addresstcl"
+	eval exec "\"$::browser\" http://wiki.tonybaldwin.info/doku.php?id=hax:addresstcl &"
 }
 
 proc help {} {
@@ -277,11 +281,11 @@ proc help {} {
 	wm title .help "Tcl Address Help"
 	bind .help <Escape> {destroy .help}
 	frame .help.t
-	grid [text .help.t.text -width 58 -height 5] 
+	grid [text .help.t.text -width 58 -height 7] 
 	bind .help.t.text <KeyPress> break
-	.help.t.text insert end "This is a simple address book program in tcl/tk.\nRead the README file, and if you still require assistance,\ncontact tony\nhttp://wiki.tonybaldwin.me"
+	.help.t.text insert end "This is a simple address book program in tcl/tk.\nRead the README file or the wiki page,\nand if you still require assistance,\ncontact tony@tonybaldwin.info\nweb page:\nhttp://wiki.tonybaldwin.me/doku.php?id=hax:addresstcl\nor http://tonyb.us/addresstcl"
 	frame .help.b
-	grid [ttk::button .help.b.web -text "Wiki" -command {wiki}]\
+	grid [ttk::button .help.b.web -text "address.tcl wiki page" -command {wiki}]\
 	[ttk::button .help.b.ok -text "Close Help" -command {destroy .help}]
 	pack .help.t -in .help
 	pack .help.b -in .help

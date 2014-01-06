@@ -4,6 +4,7 @@ a simple address book written in tcl/tk
 by tony baldwin | http://wiki.tonybaldwin.info
 released according to the the GPL v.3 or later
 http://wiki.tonybaldwin.info/doku.php?id=hax:addresstcl
+or http://tonyb.us/addresstcl (shorturl to above wiki page).
 
 This program is cross-platform, and has been tested on 
 Windows 7 and Debian 7.
