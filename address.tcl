@@ -243,7 +243,7 @@ proc seek {} {
 		destroy .seek.results
 		frame .seek.results
 		frame .seek.results.t
-		text .seek.results.t.list -width 56 -height 5  -wrap word  -yscrollcommand ".seek.results.t.s set"
+		text .seek.results.t.list -width 64 -height 5  -wrap word  -yscrollcommand ".seek.results.t.s set"
 		scrollbar .seek.results.t.s -command ".seek.results.t.list yview"
 		set list [glob -tails -type f -directory $::addir *.address]
 		set myList [::fileutil::grep (?i)$sterm $list]
@@ -252,13 +252,13 @@ proc seek {} {
 		regsub -all {set} $blist "" clist
 		.seek.results.t.list insert end "$clist"
 		frame .seek.results.btn
-		ttk::button .seek.results.btn.done -text "Close Results" -command {destroy .seek.results}
+		# ttk::button .seek.results.btn.done -text "Close Results" -command {destroy .seek.results}
 		pack .seek.results -in .seek
 		pack .seek.results.t -in .seek.results 
 		pack .seek.results.t.list -in .seek.results.t -side left -fill both
 		pack .seek.results.t.s -in .seek.results.t   -side left -fill y
 		pack .seek.results.btn -in .seek.results
-		pack .seek.results.btn.done -in .seek.results.btn
+		# pack .seek.results.btn.done -in .seek.results.btn
 		}]\
 	[ttk::button .seek.done -text "Close Search" -command {destroy .seek}]
 	pack .seek.s -in .seek
