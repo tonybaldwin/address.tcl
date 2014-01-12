@@ -2,7 +2,7 @@
 
 # installation script for address.tcl
 
-if [ != "$HOME/bin/" ]; then
+if [ ! -d "$HOME/bin/" ]; then
         mkdir $HOME/bin/
         $PATH=$PATH:/$HOME/bin/
         export PATH
