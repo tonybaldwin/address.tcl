@@ -206,7 +206,7 @@ proc saveadd {} {
 	set filename "$::lname.$::fname.address"
 	set fileid [open $filename w]
 	foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
-	wm title . "Address: : $::filename"
+	wm title . "Address: : [file tail $::filename]"
 	close $fileid
 }
 
@@ -216,7 +216,7 @@ proc saveads {} {
 	set ::note [.note.text get 1.0 {end -1c}]
 	set fileid [open $filename w]
 	foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
-	wm title . "Address: : $filename"
+	wm title . "Address: [file tail $filename]"
 	close $fileid
 }
 
@@ -227,7 +227,7 @@ proc openfile {} {
 	     set addressfile [tk_getOpenFile -filetypes $file_types -initialdir $::addir]
 	     uplevel #0 [list source $addressfile]
 	     .note.text insert end "$::note"
-	     wm title . "Address: : $addressfile"
+	     wm title . "Address: [file tail $addressfile]"
 }
 
 
